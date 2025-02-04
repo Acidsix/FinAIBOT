@@ -2,7 +2,8 @@ from flask import Flask, request
 from twilio.twiml.messaging_response import MessagingResponse
 from datetime import datetime
 import sqlite3
-import random  # Para respostas variadas
+import random
+import os  # Adicionado para usar a variável de ambiente PORT
 
 app = Flask(__name__)
 
@@ -266,4 +267,5 @@ def webhook():
     return str(resposta)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    port = int(os.environ.get("PORT", 5000))  # Usa a porta do Render ou 5000 como padrão
+    app.run(host="0.0.0.0", port=port, debug=False)  # Defina debug=False para produção
